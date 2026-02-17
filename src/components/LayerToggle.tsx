@@ -1,9 +1,7 @@
 import { useState } from "react";
 import type { Layer } from "@feltmaps/js-sdk";
 
-interface LayerState extends Layer {
-  visible: boolean;
-}
+type LayerState = Layer & { visible: boolean };
 
 interface LayerToggleProps {
   layer: LayerState;

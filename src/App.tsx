@@ -6,9 +6,7 @@ import "./App.css";
 
 const MAP_ID = "nwB1j9CilTkak2n66zCEUfA";
 
-interface LayerState extends Layer {
-  visible: boolean;
-}
+type LayerState = Layer & { visible: boolean };
 
 export default function App() {
   const { felt, mapRef } = useFeltEmbed(MAP_ID, {
@@ -33,12 +31,12 @@ export default function App() {
     felt
       .getLayers()
       .then(async (allLayers) => {
-        const ids = allLayers.map((l) => l.id);
+        const ids = allLayers.filter((l): l is NonNullable<typeof l> => l != null).map((l) => l.id);
         if (ids.length > 0) {
           await felt.setLayerVisibility({ hide: ids });
           await felt.setLayerLegendVisibility({ hide: ids });
         }
-        setLayers(allLayers.map((l) => ({ ...l, visible: false })));
+        setLayers(allLayers.filter((l): l is NonNullable<typeof l> => l != null).map((l) => ({ ...l, visible: false })));
         setMapReady(true);
       })
       .catch(() => {

@@ -3,9 +3,7 @@ import { createPortal } from "react-dom";
 import type { Layer } from "@feltmaps/js-sdk";
 import { LayerToggle } from "./LayerToggle";
 
-interface LayerState extends Layer {
-  visible: boolean;
-}
+type LayerState = Layer & { visible: boolean };
 
 interface DataModalProps {
   layers: LayerState[];
